@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# usage:
+# ./export_station_power_as_csv daily_station_power /tmp/daily_station_power
+# ./export_station_power_as_csv monthly_station_power /tmp/monthly_station_power
+
+daily_station_power() {
+  hdfs dfs -get "$2" "$1" && cd "$1" || exit
+  cat part*.csv > "$1.csv"
+  sed -i '1i\abs_time,daily_power,hour_ratio,station_name,year,dt,station_id' "$1.csv"
+}
+
+monthly_station_power() {
+  hdfs dfs -get "$2" "$1" && cd "$1" || exit
+  cat part*.csv > "$1.csv"
+  sed -i '1i\ts,monthly_power,hour_ratio,station_name,dt,statioon_id,workday' "$1.csv"
+}
+
+case $1 in
+  daily_station_power)
+    daily_station_power "$@"
+    ;;
+
+  monthly_station_power)
+    monthly_station_power "$@"
+    ;;
+
+  *)
+    echo 'Please type either daily_station_power or monthly_station_power and a path'

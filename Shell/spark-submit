@@ -1,0 +1,32 @@
+CONF_DIR=/opt/bigdata/resources
+
+sudo -su hadoop spark-submit \
+  --name HiveApp \
+  --class com.openai.OneOne \
+  --master yarn \
+  --deploy-mode cluster \
+  --master yarn \
+  --driver-memory 4g \
+  --driver-cores 1 \
+  --executor-memory 18g \
+  --executor-cores 12 \
+  --num-executors 12 \
+  --queue root.default \
+  --conf spark.hadoop.hive.metastore.uris=thrift://127.0.0.1:9083 \
+  --conf spark.hadoop.hive.exec.dynamic.partition=true \
+  --conf spark.hadoop.hive.exec.dynamic.partition.mode=nonstrict \
+  --conf spark.hadoop.hive.exec.max.dynamic.partitions.pernode=10000 \
+  --conf spark.hadoop.hive.exec.max.dynamic.partitions=100000 \
+  --conf spark.hadoop.hive.exec.max.created.files=150000 \
+  --conf spark.sql.warehouse.dir=hdfs://ns1/user/hive/warehouse/ \
+  --conf spark.yarn.maxAppAttempts=1 \
+  --conf spark.yarn.submit.waitAppCompletion=true \
+  --conf spark.sql.shuffle.partitions=600 \
+  --conf spark.driver.maxResultsSize=0 \
+  --conf spark.executor.extraJavaOptions="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8" \
+  --conf spark.driver.extraJavaOptions="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8" \
+  --files $CONF_DIR/log4j.properties,$CONF_DIR/application.conf,$CONF_DIR/hive-site.xml,$CONF_DIR/hdfs-site.xml \
+  target/batch-1.0.jar "$@"
+
+# Usage
+# ./spark-submit --key1=value1 --key2=value2 --key3=value3

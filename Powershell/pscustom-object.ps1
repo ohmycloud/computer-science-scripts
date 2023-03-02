@@ -1,0 +1,1 @@
+Get-Content -Path url.txt | ForEach-Object {[pscustomobject]@{ComputerName=$_}} | Test-Connection
