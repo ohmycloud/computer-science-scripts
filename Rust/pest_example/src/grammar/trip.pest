@@ -1,0 +1,17 @@
+trip = { SOI ~ country+ ~ EOI }
+    country = {
+        name ~
+        newline ~
+        destination+
+    }
+
+    destination = {
+        whitespace ~ name ~ whitespace ~ ":" ~ whitespace ~
+        num ~ "," ~ num ~ whitespace ~ ":" ~ whitespace ~
+        sales ~ newline
+    }
+    newline = { ("\n" | "\r\n")* }
+    whitespace = { " "+ }
+    name = { CASED_LETTER+ ~ ( " " ~ CASED_LETTER+ )*   }
+    num = { "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? }
+    sales = { ASCII_DIGIT+ }

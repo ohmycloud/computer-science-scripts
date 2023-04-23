@@ -1,0 +1,4 @@
+file = { SOI ~ expression+ ~ EOI }
+expression = { ASCII_DIGIT+ ~ "+" ~ ASCII_DIGIT+ ~ newline }
+newline = { ("\n" | "\r\n")* }
+WHITESPACE = _{ " " }

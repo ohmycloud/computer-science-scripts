@@ -1,0 +1,29 @@
+TOP = {
+   SOI ~ un_important_line+ ~ (section | un_important_line)* ~ EOI
+}
+
+section = {
+   begin ~ line+ ~ end
+}
+
+un_important_line = {
+    line
+}
+
+begin = {
+    "=begin code" ~ NEWLINE
+}
+
+// only match lines if the following is not `=begin code` or `=end code`
+line = {
+    (!("=begin code" | "=end code") ~ ANY)+
+}
+
+end = {
+    "=end code" ~ NEWLINE
+}
+
+COMMENT = _{ " " }
+
+// override newline rule
+NEWLINE = _{ ("\n" | "\r\n")* }

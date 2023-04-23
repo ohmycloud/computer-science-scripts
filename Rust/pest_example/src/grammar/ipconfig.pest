@@ -1,0 +1,12 @@
+TOP = { SOI ~ (section ~ ("\r\n" | "\n"))+ ~ EOI }
+section = {
+    header ~
+    NEWLINE ~
+    config+
+}
+
+header = { (!COMMENT ~ ANY)+ }
+line = { (!NEWLINE ~ ANY)+ }
+config = { " "+ ~ line }
+COMMENT = _{ " " }
+NEWLINE = _{ ("\n" | "\r\n")* }

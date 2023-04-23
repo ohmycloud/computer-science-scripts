@@ -1,0 +1,12 @@
+TOP          = { SOI ~ keyval+ ~ observations ~ EOI } 
+keyval       = { name ~ "=" ~
+                 (name | temp)+ ~ newline
+               }
+
+
+name = { CASED_LETTER+ ~ (" "+ ~ CASED_LETTER+)* }
+observations = { "Obs:" ~ newline ~ observation+ } 
+observation  = { ASCII_DIGIT+ ~ temp ~ (temp)* ~ newline }
+temp         = { "-"? ~ ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)* }
+newline      = @{ ("\n" | "\r\n" | " ")* }
+WHITESPACE = _{ " " }

@@ -5,7 +5,7 @@ use Terminal::Spinners;
 
 sub MAIN($str?) {
     my %oauth_consumer = key => 'cd7a95c5ecdf191d136e6d94f4350cbc', secret => 'da26d52d00f537ffa88acd8e649140c6';
-    my $client = FanFou::XAuth.new(oauth_consumer => %oauth_consumer, username => 'sxw2k@sina.com', password => '82041q');
+    my $client = FanFou::XAuth.new(oauth_consumer => %oauth_consumer, username => 'sxw2k@sina.com', password => '123456');
 
     if $str.defined {
         my $minute = (2..5).pick;

@@ -1,0 +1,2 @@
+character_class = { SOI ~ "a" ~ any_more ~ EOI }
+any_more = { ANY+ }
